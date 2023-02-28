@@ -1,6 +1,7 @@
 .section-entry{
   background: url(../../assets/images/guitar.jpg);
   background-size: cover;
-  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, .7);
+  background-blend-mode: darken;
 }
 
