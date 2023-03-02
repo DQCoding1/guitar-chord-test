@@ -57,15 +57,19 @@ const EntryPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const checkboxesArray = Object.values(checkboxesState)
+    const isThereSomeTrue = checkboxesArray.find(item => item === true)
+    if (isThereSomeTrue === undefined){
+      // removeClass d-none of warning pop up
+    } 
   }
  
 
   return (
-    <section
+    <section 
       className="
-      section-entry
-      d-flex flex-column justify-content-center align-items-center gap-5
-      w-100 min-vh-100 p-4"
+        section-entry w-100 min-vh-100 p-4
+        d-flex flex-column justify-content-center align-items-center gap-5"
     >
       <h1 className="fw-bold">Guitar Chords Test</h1>
       <p className="fs-4 text-center">
@@ -75,15 +79,49 @@ const EntryPage = () => {
         Listen to examples
       </Link>
       <button className="btn btn-primary px-5">Start Test</button>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <p>Personalize your test</p>
-            <img src={closeSvg} alt="" />
+      <div className="
+        position-fixed top-0 
+        w-100 vh-100 
+        d-flex justify-content-center align-items-center popUp"
+      >
+        <div 
+          className="
+            alert alert-warning position-absolute m-3 top-0 
+            w-100 text-center fs-3" 
+          role="alert"
+        >
+          You must select at least 1 chord
+          <img 
+            src={closeSvg} 
+            alt="close icon"
+            className="ms-5 closeImg"  
+          />
+        </div>
+        <form 
+          onSubmit={handleSubmit} 
+          className="
+            container-md bg-secondary rounded 
+            d-flex flex-column 
+            gap-1 gap-lg-3 gap-xl-4 p-3 
+            overflow-hidden"
+          >
+          <div className="row">
+            <p className="col text-center fs-3">Personalize your test</p>
+            <img 
+              src={closeSvg} 
+              alt="close icon"
+              className="col-1 ms-auto closeImg"  
+            />
           </div>
-          <div>
-            <p>how many questions ?</p>
-            <select name="amount" onChange={handleQuestions}>
+          <div className="row d-flex flex-column">
+            <p className="col text-center m-0">How many questions :</p>
+            <select 
+              name="amount" 
+              onChange={handleQuestions}
+              className="
+                col-5 col-sm-4 col-md-3 
+                m-auto text-center amountOfQuestions"
+            >
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="20">20</option>
@@ -92,101 +130,166 @@ const EntryPage = () => {
               <option value="50">50</option>
             </select>
           </div>
-          <div>
-            <p>chord types :</p>
-            <div>
+          <div className="
+              row mt-4 d-flex gap-3 
+              justify-content-center align-items-center"
+          >
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="all"
                 checked={checkboxesState.all}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="all">All Chords</label>
+              <label 
+                htmlFor="all" 
+                className="m-auto chordType"> 
+                All Chords
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="minor"
                 checked={checkboxesState.minor}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="minor">minor</label>
+              <label 
+                htmlFor="minor"
+                className="m-auto chordType"
+              >
+                minor
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="minor7"
                 checked={checkboxesState.minor7}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="minor7">minor 7</label>
+              <label 
+                htmlFor="minor7"
+                className="m-auto chordType"
+              >
+                minor 7
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="minorMaj7"
                 checked={checkboxesState.minorMaj7}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="minorMaj7">minor Maj7</label>
+              <label 
+                htmlFor="minorMaj7"
+                className="m-auto chordType"
+              >
+                minor Maj7
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="halfDiminished"
                 checked={checkboxesState.halfDiminished}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="halfDiminished">half Diminished</label>
+              <label 
+                htmlFor="halfDiminished" 
+                className="m-auto chordType"
+              >
+                half Diminished
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="diminished"
                 checked={checkboxesState.diminished}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="diminished">diminished</label>
+              <label 
+                htmlFor="diminished"
+                className="m-auto chordType"
+              >
+                diminished
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="major"
                 checked={checkboxesState.major}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="major">major</label>
+              <label 
+                htmlFor="major"
+                className="m-auto chordType"
+              >
+                major
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="major7"
                 checked={checkboxesState.major7}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="major7">major 7</label>
+              <label 
+                htmlFor="major7"
+                className="m-auto chordType"
+              >
+                major 7
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="majorMaj7"
                 checked={checkboxesState.majorMaj7}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="majorMaj7">major Maj 7</label>
+              <label 
+                htmlFor="majorMaj7"
+                className="m-auto chordType"
+              >
+                major Maj 7
+              </label>
             </div>
-            <div>
+            <div className="col-5 col-sm-3 d-flex flex-column p-2">
               <input
                 type="checkbox"
                 id="augmented"
                 checked={checkboxesState.augmented}
                 onChange={handleCheckboxes}
+                className="m-auto checkboxSize chordType"
               />
-              <label htmlFor="augmented">augmented</label>
+              <label 
+                htmlFor="augmented"
+                className="m-auto chordType"
+              >
+                augmented
+              </label>
             </div>
           </div>
-          <div>
-            <input type="submit" value="Let's start" />
+          <div className="row">
+            <input 
+              type="submit" 
+              value="Let's start" 
+              className="col-12 btn btn-primary m-auto fs-5"
+            />
           </div>
         </form>
       </div>
