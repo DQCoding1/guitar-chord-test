@@ -24,7 +24,7 @@ const ListenToExamples = () => {
     audio.play();
   };
 
-  function chordType(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function chordType(e: React.MouseEvent<HTMLButtonElement>) {
     audio.muted = true;
     const btnId = (e.target as HTMLButtonElement).id;
     switch (btnId) {
