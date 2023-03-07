@@ -31,7 +31,7 @@ export const initialCheckboxesInTrue: checkboxesChords = {
   diminished: [true, dimChords],
   major: [true, majorChords],
   major7: [true,major7Chords],
-  majorMaj7: [true, major7Chords],
+  majorMaj7: [true, majorMaj7Chords],
   augmented: [true, augChords]
 };
 

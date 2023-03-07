@@ -13,6 +13,8 @@ import {
   majorMaj7Chords,
   augChords,
 } from "../../const/chords";
+import { Link } from 'react-router-dom'
+import { routes } from "../../routes/routes";
 
 const ListenToExamples = () => {
   let audio = new Audio("");
@@ -49,8 +51,8 @@ const ListenToExamples = () => {
   }
 
   return (
-    <section className="container p-3 w-100 vh-100">
-      <header className="row p-4">
+    <section className="container p-3 w-100 ">
+      <header className="row p-4 mt-4">
         <h2 className="col">
           Listen to the chord types:
           <img
@@ -64,7 +66,7 @@ const ListenToExamples = () => {
         className="
         row row-cols-md-4 row-cols-sm-3 row-cols-2
         w-100 h-75 gap-4 
-        d-flex justify-content-center align-items-center"
+        d-flex justify-content-center align-items-center mt-5"
       >
         <button
           onClick={chordType}
@@ -130,6 +132,13 @@ const ListenToExamples = () => {
           augmented
         </button>
       </main>
+      <div className="row mt-5">
+        <Link 
+          to={routes.ENTRY} 
+          className="col-12 link-info text-end">
+            Go To Main
+        </Link>
+      </div>
     </section>
   );
 };

@@ -1,16 +1,20 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ChordsContext, QuestionsContext } from "../../context/testContext";
 import { ChordInfo } from "../../const/chords";
 import { routes } from "../../routes/routes";
+import "./Test.css";
 
 const Test = () => {
   const [chordToFind, setChordToFind] = useState<ChordInfo>({ chord: "" });
   const [chordName, setChordName] = useState<string>("");
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
-  const [score, setScore] = useState<number>(0);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [wrongAnswers, setWrongAnswers] = useState<number>(0);
   const { chords } = useContext(ChordsContext);
   const { questions } = useContext(QuestionsContext);
+  const refCorrectAnswers = useRef<HTMLParagraphElement>(null);
+  const refWrongAnswers = useRef<HTMLParagraphElement>(null);
   let audio = new Audio("");
   console.log(chords);
   // console.log(questions);
@@ -40,6 +44,7 @@ const Test = () => {
   };
 
   const compareAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    audio.muted = true;
     const elementId = (e.target as HTMLButtonElement).id;
     console.log(elementId);
     console.log(chordName);
@@ -47,81 +52,167 @@ const Test = () => {
       setCurrentQuestion(currentQuestion + 1);
       if (chordName === elementId) {
         console.log("correct");
-        setScore(score + 10);
+        setCorrectAnswers(correctAnswers + 1);
+        refCorrectAnswers.current?.classList.add("addColorToCorrect");
+        setTimeout(() => {
+          return refCorrectAnswers.current?.classList.remove(
+            "addColorToCorrect"
+          );
+        }, 1000);
       } else {
         console.log("incorrect");
+        setWrongAnswers(wrongAnswers + 1);
+        refWrongAnswers.current?.classList.add("addColorToWrong");
+        setTimeout(() => {
+          return refWrongAnswers.current?.classList.remove("addColorToWrong");
+        }, 1000);
       }
     } else {
       const valuePerQuestion = 100 / Number(questions.amount);
+      let finalScore: number;
       if (chordName === elementId) {
-        const finalScore =
-          (score / Number(questions.amount)) * 10 + valuePerQuestion;
-        console.log(finalScore);
+        finalScore =
+          (correctAnswers / Number(questions.amount)) * 100 + valuePerQuestion;
       } else {
-        const finalScore = (score / Number(questions.amount)) * 10;
-        console.log(finalScore);
+        finalScore = (correctAnswers / Number(questions.amount)) * 100;
       }
+      console.log(finalScore);
     }
   };
 
   const resetTest = () => {
-    setScore(0);
+    setCorrectAnswers(0);
+    setWrongAnswers(0);
     setCurrentQuestion(1);
     setChordName("");
     setChordToFind({ chord: "" });
   };
 
   return (
-    <div>
+    <div className="container ">
       {chords[0][0] === "refreshPageWhileTest" ? (
-        <div>
-          You refreshed the page while you were doing the test, 
-          <Link to={routes.ENTRY}>Go To Main</Link>
+        <div className="row p-5 fs-5">
+          <p className="text-end text-center">
+            You refreshed the page while you were doing the test,
+          </p>
+          <Link to={routes.ENTRY} className="link-info text-center">
+            Go To Main
+          </Link>
         </div>
       ) : (
-        <div>
-          <div>
-            <p>
-              Question {currentQuestion} of {questions.amount}
-            </p>
-            <p>Score: {score}</p>
-          </div>
-          <div>
-            <div>
-              <p onClick={chordTofind}>Chord to find</p>
+        <div className="container mt-2 d-flex flex-column gap-4">
+          <div className="row">
+            <div className="row m-0 p-0">
+              <p className="text-end fs-5 p-0 m-0">
+                Question {currentQuestion} of {questions.amount}
+              </p>
+            </div>
+            <div className="row m-0 p-0">
+              <p
+                className="col-auto ms-auto text-end rounded fs-5 p-0 m-0"
+                ref={refCorrectAnswers}
+              >
+                Correct : {correctAnswers}
+              </p>
+            </div>
+            <div className="row m-0 p-0">
+              <p
+                className="col-auto ms-auto text-end rounded fs-5 p-0 m-0"
+                ref={refWrongAnswers}
+              >
+                Wrong : {wrongAnswers}
+              </p>
             </div>
           </div>
-          <div>Options:</div>
-          <main>
-            <button id="minor" onClick={compareAnswer}>
+          <div className="row">
+            <div
+              onClick={chordTofind}
+              className="
+                chordToFind text-uppercase fw-bold btn btn-dark
+                rounded-circle border m-auto "
+            >
+              <p className="m-auto">Chord to find</p>
+            </div>
+          </div>
+          <div className="row">
+            <p className="col text-center">Options :</p>
+          </div>
+          <main
+            className="
+             row row-cols-md-4 row-cols-sm-3 row-cols-2
+             w-100 h-75 gap-1
+             d-flex justify-content-center align-items-center"
+          >
+            <button
+              id="minor"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               minor
             </button>
-            <button id="minor7" onClick={compareAnswer}>
+            <button
+              id="minor7"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               minor 7
             </button>
-            <button id="minorMaj7" onClick={compareAnswer}>
+            <button
+              id="minorMaj7"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               minor Maj7
             </button>
-            <button id="halfDiminished" onClick={compareAnswer}>
+            <button
+              id="halfDiminished"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               half diminished
             </button>
-            <button id="diminished" onClick={compareAnswer}>
+            <button
+              id="diminished"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               diminished
             </button>
-            <button id="major" onClick={compareAnswer}>
+            <button
+              id="major"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               major
             </button>
-            <button id="major7" onClick={compareAnswer}>
+            <button
+              id="major7"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               major 7
             </button>
-            <button id="majorMaj7" onClick={compareAnswer}>
+            <button
+              id="majorMaj7"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               major Maj7
             </button>
-            <button id="augmented" onClick={compareAnswer}>
+            <button
+              id="augmented"
+              className="p-4 border rounded btn btn-dark"
+              onClick={compareAnswer}
+            >
               augmented
             </button>
-            <div onClick={resetTest}>Restart Test</div>
           </main>
+          <div onClick={resetTest} className="row ">
+            <p className="col-6 link-info restartTest">Restart Test</p>
+            <Link to={routes.ENTRY} className="col-6 link-info text-center">
+              Go To Main
+            </Link>
+          </div>
         </div>
       )}
     </div>
