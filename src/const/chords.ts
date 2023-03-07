@@ -1,8 +1,8 @@
-export interface chordInfo {
+export interface ChordInfo {
   chord: string,
 }
 
-export const minorChords: Array<chordInfo> = [
+export const minorChords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/minor C.mp3")
   },
@@ -27,7 +27,7 @@ export const minorChords: Array<chordInfo> = [
 ]
 
 
-export const minor7Chords: Array<chordInfo> = [
+export const minor7Chords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/minor7 C.mp3")
   },
@@ -51,7 +51,7 @@ export const minor7Chords: Array<chordInfo> = [
   }
 ]
 
-export const minorMaj7Chords: Array<chordInfo> = [
+export const minorMaj7Chords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/minorMaj7 C.mp3")
   },
@@ -75,7 +75,7 @@ export const minorMaj7Chords: Array<chordInfo> = [
   }
 ]
 
-export const halfDimChords: Array<chordInfo> = [
+export const halfDimChords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/halfDim C.mp3")
   },
@@ -99,7 +99,7 @@ export const halfDimChords: Array<chordInfo> = [
   }
 ]
 
-export const dimChords: Array<chordInfo> = [
+export const dimChords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/dim C.mp3")
   },
@@ -123,7 +123,7 @@ export const dimChords: Array<chordInfo> = [
   }
 ]
 
-export const majorChords: Array<chordInfo> = [
+export const majorChords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/major C.mp3")
   },
@@ -147,7 +147,7 @@ export const majorChords: Array<chordInfo> = [
   }
 ]
 
-export const major7Chords: Array<chordInfo> = [
+export const major7Chords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/major7 C.mp3")
   },
@@ -171,7 +171,7 @@ export const major7Chords: Array<chordInfo> = [
   }
 ]
 
-export const majorMaj7Chords: Array<chordInfo> = [
+export const majorMaj7Chords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/majorMaj7 C.mp3")
   },
@@ -195,7 +195,7 @@ export const majorMaj7Chords: Array<chordInfo> = [
   }
 ]
 
-export const augChords: Array<chordInfo> = [
+export const augChords: Array<ChordInfo> = [
   {
     chord: require("../assets/chords/aug C.mp3")
   },

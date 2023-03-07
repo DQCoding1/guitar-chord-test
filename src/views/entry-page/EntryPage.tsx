@@ -1,69 +1,57 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../routes/routes";
 import "./EntryPage.css";
 import closeSvg from "../../assets/images/close.svg";
-
-interface checkboxesChords {
-  [index: string]: boolean;
-  all: boolean;
-  minor: boolean;
-  minor7: boolean;
-  minorMaj7: boolean;
-  halfDiminished: boolean;
-  diminished: boolean;
-  major: boolean;
-  major7: boolean;
-  majorMaj7: boolean;
-  augmented: boolean;
-}
-
-const initialCheckboxes: checkboxesChords = {
-  all: true,
-  minor: false,
-  minor7: false,
-  minorMaj7: false,
-  halfDiminished: false,
-  diminished: false,
-  major: false,
-  major7: false,
-  majorMaj7: false,
-  augmented: false,
-};
+import {
+  amountOfQuestions,
+  checkboxesChords,
+} from "../../interfaces/interfaces";
+import { QuestionsContext, ChordsContext } from "../../context/testContext";
+import {
+  initialCheckboxesInTrue,
+  initialCheckboxesInFalse,
+  initialAmountOfQuestions,
+} from "../../const/initialValues";
 
 const EntryPage = () => {
-  const [checkboxesState, setCheckboxesState] =
-    useState<checkboxesChords>(initialCheckboxes);
+  const [checkboxesState, setCheckboxesState] = useState<checkboxesChords>(
+    initialCheckboxesInFalse
+  );
 
-  const [amountOfQuestions, setAmountOfQuestions] = useState<string>("5");
+  const [amountOfQuestions, setAmountOfQuestions] = useState<amountOfQuestions>(
+    initialAmountOfQuestions
+  );
+
   const popUpPersonalizeRef = useRef<HTMLDivElement>(null);
   const popUpWarningRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { setChords } = useContext(ChordsContext);
+  const { setQuestions } = useContext(QuestionsContext);
+  const [allCheckboxes, setAllCheckboxes] = useState<boolean>(false);
 
   const handleCheckboxes = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputId = e.target.id;
     if (inputId === "all") {
-      setCheckboxesState(initialCheckboxes);
+      if (allCheckboxes === true) {
+        setCheckboxesState(initialCheckboxesInFalse);
+      } else {
+        setCheckboxesState(initialCheckboxesInTrue);
+      }
+      setAllCheckboxes(!allCheckboxes);
     } else {
       setCheckboxesState({
         ...checkboxesState,
-        all: false,
-        [inputId]: !checkboxesState[inputId],
+        [inputId]: [!checkboxesState[inputId][0], checkboxesState[inputId][1]],
       });
     }
   };
 
   const handleQuestions = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectValue = e.target.value;
-    setAmountOfQuestions(selectValue);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const checkboxesArray = Object.values(checkboxesState);
-    const isThereSomeTrue = checkboxesArray.find((item) => item === true);
-    if (isThereSomeTrue === undefined) {
-      popUpWarningRef.current?.classList.toggle("d-none");
-    }
+    setAmountOfQuestions({
+      amount: selectValue,
+    });
   };
 
   const showPopUps = (
@@ -75,6 +63,21 @@ const EntryPage = () => {
       popUpPersonalizeRef.current?.classList.toggle("d-none");
     } else {
       popUpWarningRef.current?.classList.toggle("d-none");
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const checkboxesArray = Object.entries(checkboxesState);
+    const filteredChordsInTrue = checkboxesArray.filter(
+      (item) => item[1][0] === true
+    );
+    if (filteredChordsInTrue[0] === undefined) {
+      popUpWarningRef.current?.classList.toggle("d-none");
+    } else {
+      setQuestions(amountOfQuestions);
+      setChords(filteredChordsInTrue);
+      navigate(routes.TEST);
     }
   };
 
@@ -124,7 +127,7 @@ const EntryPage = () => {
         <form
           onSubmit={handleSubmit}
           className="
-            container-md bg-secondary rounded 
+            container-md bg-dark rounded 
             d-flex flex-column 
             gap-1 gap-lg-3 gap-xl-4 p-3 
             overflow-hidden"
@@ -165,7 +168,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="all"
-                checked={checkboxesState.all}
+                checked={allCheckboxes}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -177,7 +180,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="minor"
-                checked={checkboxesState.minor}
+                checked={checkboxesState.minor[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -189,7 +192,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="minor7"
-                checked={checkboxesState.minor7}
+                checked={checkboxesState.minor7[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -201,7 +204,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="minorMaj7"
-                checked={checkboxesState.minorMaj7}
+                checked={checkboxesState.minorMaj7[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -213,7 +216,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="halfDiminished"
-                checked={checkboxesState.halfDiminished}
+                checked={checkboxesState.halfDiminished[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -225,7 +228,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="diminished"
-                checked={checkboxesState.diminished}
+                checked={checkboxesState.diminished[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -237,7 +240,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="major"
-                checked={checkboxesState.major}
+                checked={checkboxesState.major[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -249,7 +252,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="major7"
-                checked={checkboxesState.major7}
+                checked={checkboxesState.major7[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -261,7 +264,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="majorMaj7"
-                checked={checkboxesState.majorMaj7}
+                checked={checkboxesState.majorMaj7[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />
@@ -273,7 +276,7 @@ const EntryPage = () => {
               <input
                 type="checkbox"
                 id="augmented"
-                checked={checkboxesState.augmented}
+                checked={checkboxesState.augmented[0]}
                 onChange={handleCheckboxes}
                 className="m-auto checkboxSize chordType"
               />

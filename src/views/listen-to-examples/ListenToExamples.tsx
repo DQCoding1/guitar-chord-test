@@ -2,7 +2,7 @@ import React from "react";
 import musicNote from "../../assets/images/musicNote.png";
 import "./ListenToExamples.css";
 import {
-  chordInfo,
+  ChordInfo,
   minorChords,
   minor7Chords,
   minorMaj7Chords,
@@ -17,9 +17,8 @@ import {
 const ListenToExamples = () => {
   let audio = new Audio("");
 
-  const playChord = (chords: Array<chordInfo>) => {
-    const chordsLength = chords.length;
-    const randomNum = Math.floor(Math.random() * chordsLength);
+  const playChord = (chords: Array<ChordInfo>) => {
+    const randomNum = Math.floor(Math.random() * chords.length);
     audio = new Audio(chords[randomNum].chord);
     audio.play();
   };
