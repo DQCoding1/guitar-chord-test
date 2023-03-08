@@ -11,13 +11,14 @@ const Test = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
-  const { chords } = useContext(ChordsContext);
-  const { questions } = useContext(QuestionsContext);
+  const [finalScoreSpan, setFinalScoreSpan] = useState<number>(0);
+  const [finalScore, setFinalScore] = useState<number>(0);
   const refCorrectAnswers = useRef<HTMLParagraphElement>(null);
   const refWrongAnswers = useRef<HTMLParagraphElement>(null);
+  const refFinalScorePopUp = useRef<HTMLDivElement>(null);
+  const { chords } = useContext(ChordsContext);
+  const { questions } = useContext(QuestionsContext);
   let audio = new Audio("");
-  console.log(chords);
-  // console.log(questions);
 
   useEffect(() => {
     const randomNumForChordType = Math.floor(Math.random() * chords.length);
@@ -37,21 +38,27 @@ const Test = () => {
     setChordName(randomChordName);
   }, [currentQuestion]);
 
+  useEffect(() => {
+    if (finalScoreSpan < finalScore) {
+      setTimeout(() => setFinalScoreSpan(finalScoreSpan + 1), 25);
+    }
+  }, [finalScoreSpan]);
+
   const chordTofind = () => {
     audio.muted = true;
     audio = new Audio(chordToFind.chord);
     audio.play();
   };
 
+  const toggleClassPopUpScore = () => {
+    refFinalScorePopUp.current?.classList.toggle("d-none");
+  };
+
   const compareAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     audio.muted = true;
     const elementId = (e.target as HTMLButtonElement).id;
-    console.log(elementId);
-    console.log(chordName);
-    if (currentQuestion < Number(questions.amount)) {
-      setCurrentQuestion(currentQuestion + 1);
+    if (correctAnswers + wrongAnswers < Number(questions.amount)) {
       if (chordName === elementId) {
-        console.log("correct");
         setCorrectAnswers(correctAnswers + 1);
         refCorrectAnswers.current?.classList.add("addColorToCorrect");
         setTimeout(() => {
@@ -60,23 +67,28 @@ const Test = () => {
           );
         }, 1000);
       } else {
-        console.log("incorrect");
         setWrongAnswers(wrongAnswers + 1);
         refWrongAnswers.current?.classList.add("addColorToWrong");
         setTimeout(() => {
           return refWrongAnswers.current?.classList.remove("addColorToWrong");
         }, 1000);
       }
+    }
+
+    if (currentQuestion < Number(questions.amount)) {
+      setCurrentQuestion(currentQuestion + 1);
     } else {
       const valuePerQuestion = 100 / Number(questions.amount);
-      let finalScore: number;
       if (chordName === elementId) {
-        finalScore =
+        const score =
           (correctAnswers / Number(questions.amount)) * 100 + valuePerQuestion;
+        setFinalScore(score);
       } else {
-        finalScore = (correctAnswers / Number(questions.amount)) * 100;
+        const score = (correctAnswers / Number(questions.amount)) * 100;
+        setFinalScore(score);
       }
-      console.log(finalScore);
+      setTimeout(() => setFinalScoreSpan(1), 2300);
+      setTimeout(() => toggleClassPopUpScore(), 1500);
     }
   };
 
@@ -86,6 +98,8 @@ const Test = () => {
     setCurrentQuestion(1);
     setChordName("");
     setChordToFind({ chord: "" });
+    setFinalScore(0);
+    setFinalScoreSpan(0);
   };
 
   return (
@@ -103,13 +117,13 @@ const Test = () => {
         <div className="container mt-2 d-flex flex-column gap-4">
           <div className="row">
             <div className="row m-0 p-0">
-              <p className="text-end fs-5 p-0 m-0">
+              <p className="text-end p-0 m-0">
                 Question {currentQuestion} of {questions.amount}
               </p>
             </div>
             <div className="row m-0 p-0">
               <p
-                className="col-auto ms-auto text-end rounded fs-5 p-0 m-0"
+                className="col-auto ms-auto text-end rounded p-0 m-0"
                 ref={refCorrectAnswers}
               >
                 Correct : {correctAnswers}
@@ -117,7 +131,7 @@ const Test = () => {
             </div>
             <div className="row m-0 p-0">
               <p
-                className="col-auto ms-auto text-end rounded fs-5 p-0 m-0"
+                className="col-auto ms-auto text-end rounded p-0 m-0"
                 ref={refWrongAnswers}
               >
                 Wrong : {wrongAnswers}
@@ -215,6 +229,34 @@ const Test = () => {
           </div>
         </div>
       )}
+      <div
+        className="
+          container-fluid w-100 vh-100 bg-dark 
+          d-flex flex-column gap-2 justify-content-center align-items-center 
+          position-fixed top-0 start-0 d-none "
+        ref={refFinalScorePopUp}
+      >
+        <div className="row ">
+          <p className="fs-1 m-0 p-0">
+            Score <span className="fw-bold">{finalScoreSpan}</span>%
+          </p>
+        </div>
+        <p className="fs-5">
+          {finalScore < 80
+            ? "You didn't pass the test 🙁"
+            : "You passed the test 🙂"}
+        </p>
+        <div onClick={resetTest} className="d-flex gap-5 ">
+          <p className="link-info restartTest" onClick={toggleClassPopUpScore}>
+            Restart Test
+          </p>
+          <div>
+            <Link to={routes.ENTRY} className="link-info text-center">
+              Go To Main
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
