@@ -1,0 +1,30 @@
+.chordToFind{
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chordToFind:hover{
+  cursor: pointer;
+}
+
+.restartTest{
+  text-align: center;
+  text-decoration: underline;
+}
+
+.restartTest:hover{
+  cursor: pointer;
+}
+
+.addColorToCorrect{
+  background-color: #0EAD69;
+  transition: 300ms;
+}
+
+.addColorToWrong{
+  background-color: #C1292E;
+  transition: 300ms;
+}

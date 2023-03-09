@@ -1,0 +1,36 @@
+.section-entry{
+  background: url(../../assets/images/guitar.jpg);
+  background-size: cover;
+  background-color: rgba(0, 0, 0, .7);
+  background-blend-mode: darken;
+}
+
+.closeImg{
+  width: 35px;
+  height: 35px;
+  background-color: #f41722;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.closeImg:hover{
+  cursor: pointer;
+  background-color: #e31b25;
+}
+
+.amountOfQuestions:hover{
+  cursor: pointer;
+}
+
+.checkboxSize{
+  width: 20px;
+  height: 20px;
+}
+
+.chordType:hover{
+  cursor: pointer;
+}
+
+.popUp{
+  backdrop-filter: blur(5px);
+}
