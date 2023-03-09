@@ -1,5 +1,5 @@
 export const routes = {
-  ENTRY: "/",
+  ENTRY: "/guitar-chords-test",
   EXAMPLES: "/examples",
   TEST: "/test",
 }
