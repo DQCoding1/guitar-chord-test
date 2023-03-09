@@ -114,8 +114,12 @@ const Test = () => {
           </Link>
         </div>
       ) : (
-        <div className="container mt-2 d-flex flex-column gap-4">
-          <div className="row">
+        <div 
+          className="container mt-2 
+            justify-content-center align-items-center 
+            d-flex flex-column gap-4"
+        >
+          <div className="row ms-auto">
             <div className="row m-0 p-0">
               <p className="text-end p-0 m-0">
                 Question {currentQuestion} of {questions.amount}
@@ -221,7 +225,7 @@ const Test = () => {
               augmented
             </button>
           </main>
-          <div onClick={resetTest} className="row ">
+          <div onClick={resetTest} className="row w-100 ">
             <p className="col-6 link-info restartTest">Restart Test</p>
             <Link to={routes.ENTRY} className="col-6 link-info text-center">
               Go To Main

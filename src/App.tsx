@@ -6,6 +6,7 @@ import EntryPage from './views/entry-page/EntryPage';
 import ListenToExamples from './views/listen-to-examples/ListenToExamples';
 import Test from './views/test-page/Test';
 import { QuestionProvider, ChordsProvider } from './context/testContext';
+import NotFound from './views/not-found/NotFound';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             </QuestionProvider>
           </ChordsProvider>} 
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
