@@ -8,6 +8,7 @@ import "./Test.css";
 const Test = () => {
   const [chordToFind, setChordToFind] = useState<ChordInfo>({ chord: "" });
   const [chordName, setChordName] = useState<string>("");
+  const [resultOfEachQuestion, setResultOfEachQuestion] = useState<string>("")
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
@@ -60,6 +61,7 @@ const Test = () => {
     if (correctAnswers + wrongAnswers < Number(questions.amount)) {
       if (chordName === elementId) {
         setCorrectAnswers(correctAnswers + 1);
+        setResultOfEachQuestion(`Correct, it's ${chordName}`)
         refCorrectAnswers.current?.classList.add("addColorToCorrect");
         setTimeout(() => {
           return refCorrectAnswers.current?.classList.remove(
@@ -68,6 +70,7 @@ const Test = () => {
         }, 1000);
       } else {
         setWrongAnswers(wrongAnswers + 1);
+        setResultOfEachQuestion(`Incorrect, it's ${chordName}`)
         refWrongAnswers.current?.classList.add("addColorToWrong");
         setTimeout(() => {
           return refWrongAnswers.current?.classList.remove("addColorToWrong");
@@ -100,6 +103,7 @@ const Test = () => {
     setChordToFind({ chord: "" });
     setFinalScore(0);
     setFinalScoreSpan(0);
+    setResultOfEachQuestion("")
   };
 
   return (
@@ -120,6 +124,7 @@ const Test = () => {
             d-flex flex-column gap-4"
         >
           <div className="row ms-auto">
+            <p>{resultOfEachQuestion}</p>
             <div className="row m-0 p-0">
               <p className="text-end p-0 m-0">
                 Question {currentQuestion} of {questions.amount}
