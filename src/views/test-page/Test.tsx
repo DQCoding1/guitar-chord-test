@@ -112,7 +112,7 @@ const Test = () => {
     setResultOfEachQuestion("")
   };
 
-  
+
   return (
     <div className="container ">
       {chords[0][0] === "refreshPageWhileTest" ? (
@@ -133,29 +133,33 @@ const Test = () => {
           <div className="row w-100">
             <p 
               className="
-                col-auto d-flex 
+                col-12 col-md-auto d-flex  
                 justify-content-center align-items-center 
-                rounded fs-3 px-5" 
+                rounded fs-3 px-md-5" 
               ref={refResultOfEachQuestion}
             >
                 {resultOfEachQuestion}
             </p>
-            <div className="col-auto ms-auto fs-5">
+            <div className="col-12 col-md-auto ms-auto fs-5">
               <div className="container m-0 p-0">
-                <p className="text-end p-0 m-0">
+                <p className="text-center text-md-end p-0 m-0">
                   Question {currentQuestion} of {questions.amount}
                 </p>
               </div>
               <div className="container m-0 p-0">
                 <p
-                  className="row-auto ms-auto text-end rounded p-0 m-0"
+                  className="
+                    row-auto ms-auto 
+                    text-center text-md-end rounded p-0 m-0"
                 >
                   Correct : {correctAnswers}
                 </p>
               </div>
               <div className="container m-0 p-0">
                 <p
-                  className="row-auto ms-auto text-end rounded p-0 m-0"
+                  className="
+                    row-auto ms-auto 
+                    text-center text-md-end rounded p-0 m-0"
                 >
                   Wrong : {wrongAnswers}
                 </p>
