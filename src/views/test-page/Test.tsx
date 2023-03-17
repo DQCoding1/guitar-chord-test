@@ -14,8 +14,7 @@ const Test = () => {
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
   const [finalScoreSpan, setFinalScoreSpan] = useState<number>(0);
   const [finalScore, setFinalScore] = useState<number>(0);
-  const refCorrectAnswers = useRef<HTMLParagraphElement>(null);
-  const refWrongAnswers = useRef<HTMLParagraphElement>(null);
+  const refResultOfEachQuestion = useRef<HTMLParagraphElement>(null);
   const refFinalScorePopUp = useRef<HTMLDivElement>(null);
   const { chords } = useContext(ChordsContext);
   const { questions } = useContext(QuestionsContext);
@@ -39,11 +38,13 @@ const Test = () => {
     setChordName(randomChordName);
   }, [currentQuestion]);
 
+
   useEffect(() => {
     if (finalScoreSpan < finalScore) {
       setTimeout(() => setFinalScoreSpan(finalScoreSpan + 1), 25);
     }
   }, [finalScoreSpan]);
+
 
   const chordTofind = () => {
     audio.muted = true;
@@ -51,9 +52,11 @@ const Test = () => {
     audio.play();
   };
 
+
   const toggleClassPopUpScore = () => {
     refFinalScorePopUp.current?.classList.toggle("d-none");
   };
+
 
   const compareAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     audio.muted = true;
@@ -62,18 +65,20 @@ const Test = () => {
       if (chordName === elementId) {
         setCorrectAnswers(correctAnswers + 1);
         setResultOfEachQuestion(`Correct, it's ${chordName}`)
-        refCorrectAnswers.current?.classList.add("addColorToCorrect");
+        refResultOfEachQuestion.current?.classList.add("addColorToCorrect");
         setTimeout(() => {
-          return refCorrectAnswers.current?.classList.remove(
+          refResultOfEachQuestion.current?.classList.remove(
             "addColorToCorrect"
-          );
+          )
         }, 1000);
       } else {
         setWrongAnswers(wrongAnswers + 1);
         setResultOfEachQuestion(`Incorrect, it's ${chordName}`)
-        refWrongAnswers.current?.classList.add("addColorToWrong");
+        refResultOfEachQuestion.current?.classList.add("addColorToWrong");
         setTimeout(() => {
-          return refWrongAnswers.current?.classList.remove("addColorToWrong");
+          refResultOfEachQuestion.current?.classList.remove(
+            "addColorToWrong"
+          );
         }, 1000);
       }
     }
@@ -90,10 +95,11 @@ const Test = () => {
         const score = (correctAnswers / Number(questions.amount)) * 100;
         setFinalScore(score);
       }
-      setTimeout(() => setFinalScoreSpan(1), 2300);
-      setTimeout(() => toggleClassPopUpScore(), 1500);
+      setTimeout(() => setFinalScoreSpan(1), 1800);
+      setTimeout(() => toggleClassPopUpScore(), 1200);
     }
   };
+
 
   const resetTest = () => {
     setCorrectAnswers(0);
@@ -106,6 +112,7 @@ const Test = () => {
     setResultOfEachQuestion("")
   };
 
+  
   return (
     <div className="container ">
       {chords[0][0] === "refreshPageWhileTest" ? (
@@ -123,29 +130,37 @@ const Test = () => {
             justify-content-center align-items-center 
             d-flex flex-column gap-4"
         >
-          <div className="row ms-auto">
-            <p>{resultOfEachQuestion}</p>
-            <div className="row m-0 p-0">
-              <p className="text-end p-0 m-0">
-                Question {currentQuestion} of {questions.amount}
-              </p>
-            </div>
-            <div className="row m-0 p-0">
-              <p
-                className="col-auto ms-auto text-end rounded p-0 m-0"
-                ref={refCorrectAnswers}
-              >
-                Correct : {correctAnswers}
-              </p>
-            </div>
-            <div className="row m-0 p-0">
-              <p
-                className="col-auto ms-auto text-end rounded p-0 m-0"
-                ref={refWrongAnswers}
-              >
-                Wrong : {wrongAnswers}
-              </p>
-            </div>
+          <div className="row w-100">
+            <p 
+              className="
+                col-auto d-flex 
+                justify-content-center align-items-center 
+                rounded fs-3 px-5" 
+              ref={refResultOfEachQuestion}
+            >
+                {resultOfEachQuestion}
+            </p>
+            <div className="col-auto ms-auto fs-5">
+              <div className="container m-0 p-0">
+                <p className="text-end p-0 m-0">
+                  Question {currentQuestion} of {questions.amount}
+                </p>
+              </div>
+              <div className="container m-0 p-0">
+                <p
+                  className="row-auto ms-auto text-end rounded p-0 m-0"
+                >
+                  Correct : {correctAnswers}
+                </p>
+              </div>
+              <div className="container m-0 p-0">
+                <p
+                  className="row-auto ms-auto text-end rounded p-0 m-0"
+                >
+                  Wrong : {wrongAnswers}
+                </p>
+              </div>
+            </div>  
           </div>
           <div className="row">
             <div

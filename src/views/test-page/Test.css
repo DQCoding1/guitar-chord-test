@@ -20,11 +20,11 @@
 }
 
 .addColorToCorrect{
-  background-color: #0EAD69;
-  transition: 300ms;
+  background-color: #267553;
+  transition: 600ms;
 }
 
 .addColorToWrong{
-  background-color: #C1292E;
-  transition: 300ms;
+  background-color: #812124;
+  transition: 600ms;
 }
