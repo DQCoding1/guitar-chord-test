@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import musicNote from "../../assets/images/musicNote.png";
 import "./ListenToExamples.css";
 import {
@@ -17,15 +17,18 @@ import { Link } from 'react-router-dom'
 import { routes } from "../../routes/routes";
 
 const ListenToExamples = () => {
+  const loadingRef = useRef<HTMLDivElement>(null)
   let audio = new Audio("");
 
   const playChord = (chords: Array<ChordInfo>) => {
     const randomNum = Math.floor(Math.random() * chords.length);
     audio = new Audio(chords[randomNum].chord);
-    audio.play();
+    audio.play()
+      .then(() => loadingRef.current?.classList.remove("loadingVisible"))
   };
 
   function chordType(e: React.MouseEvent<HTMLButtonElement>) {
+    loadingRef.current?.classList.add("loadingVisible")
     audio.muted = true;
     const btnId = (e.target as HTMLButtonElement).id;
     switch (btnId) {
@@ -52,6 +55,16 @@ const ListenToExamples = () => {
 
   return (
     <section className="container p-3 w-100 ">
+      <div 
+        className="
+          loadingNotVisible
+          position-fixed top-0 start-0 w-100 "
+        ref={loadingRef}
+      >
+        <div className="w-50 text-white fs-5 border-start p-3">
+          Loading ...
+        </div>
+      </div>
       <header className="row p-4 mt-4">
         <h2 className="col">
           Listen to the chord types:
