@@ -44,7 +44,7 @@ const Test = () => {
     if (finalScoreSpan < finalScore) {
       setTimeout(() => setFinalScoreSpan(finalScoreSpan + 1), 25);
     }
-  }, [finalScoreSpan]);
+  }, [finalScoreSpan, finalScore]);
 
 
   const chordTofind = () => {
@@ -98,7 +98,6 @@ const Test = () => {
         const score = (correctAnswers / Number(questions.amount)) * 100;
         setFinalScore(score);
       }
-      setTimeout(() => setFinalScoreSpan(1), 1800);
       setTimeout(() => toggleClassPopUpScore(), 1200);
     }
   };
