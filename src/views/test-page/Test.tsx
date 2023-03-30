@@ -93,10 +93,10 @@ const Test = () => {
       if (chordName === elementId) {
         const score =
           (correctAnswers / Number(questions.amount)) * 100 + valuePerQuestion;
-        setFinalScore(score);
+        setTimeout(() => setFinalScore(score), 1800);
       } else {
         const score = (correctAnswers / Number(questions.amount)) * 100;
-        setFinalScore(score);
+        setTimeout(() => setFinalScore(score), 1800);
       }
       setTimeout(() => toggleClassPopUpScore(), 1200);
     }
