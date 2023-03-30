@@ -54,14 +54,18 @@ const ListenToExamples = () => {
   }
 
   return (
-    <section className="container p-3 w-100 ">
+    <section className="container w-100 ">
       <div 
         className="
           loadingNotVisible
-          position-fixed top-0 start-0 w-100 "
+          position-fixed top-0 start-0 w-100
+          d-flex justify-content-center align-items-center"
         ref={loadingRef}
       >
-        <div className="w-50 text-white fs-5 border-start p-3">
+        <div 
+          className="
+            w-50 text-center text-white fs-5 
+            border-bottom ms-3 ">
           Loading ...
         </div>
       </div>
