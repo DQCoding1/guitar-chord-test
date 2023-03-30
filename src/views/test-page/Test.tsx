@@ -16,6 +16,7 @@ const Test = () => {
   const [finalScore, setFinalScore] = useState<number>(0);
   const refResultOfEachQuestion = useRef<HTMLParagraphElement>(null);
   const refFinalScorePopUp = useRef<HTMLDivElement>(null);
+  const loadingRef = useRef<HTMLDivElement>(null);
   const { chords } = useContext(ChordsContext);
   const { questions } = useContext(QuestionsContext);
   let audio = new Audio("");
@@ -47,9 +48,11 @@ const Test = () => {
 
 
   const chordTofind = () => {
+    loadingRef.current?.classList.add("loadingVisible")
     audio.muted = true;
     audio = new Audio(chordToFind.chord);
-    audio.play();
+    audio.play()
+      .then(() => loadingRef.current?.classList.remove("loadingVisible"));
   };
 
 
@@ -115,6 +118,20 @@ const Test = () => {
 
   return (
     <div className="container ">
+      <div 
+        className="
+          loadingNotVisible
+          position-fixed top-0 start-0 w-100
+          d-flex justify-content-center align-items-center"
+        ref={loadingRef}
+      >
+        <div 
+          className="
+            w-50 text-center text-white fs-5 
+            border-bottom ms-3 ">
+          Loading ...
+        </div>
+      </div>
       {chords[0][0] === "refreshPageWhileTest" ? (
         <div className="row p-5 fs-5">
           <p className="text-end text-center">
