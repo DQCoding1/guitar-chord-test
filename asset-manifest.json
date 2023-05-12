@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/guitar-chords-test/static/css/main.58e9d0e5.css",
-    "main.js": "/guitar-chords-test/static/js/main.dfaa61ab.js",
+    "main.js": "/guitar-chords-test/static/js/main.4d55457f.js",
     "static/media/guitar.jpg": "/guitar-chords-test/static/media/guitar.f2d2ac50a44356c7e9d5.jpg",
     "static/media/broken-guitar.jpg": "/guitar-chords-test/static/media/broken-guitar.8ae2d8f956e711e57b21.jpg",
     "static/media/dim C.mp3": "/guitar-chords-test/static/media/dim C.a7496156d54c612cab5e.mp3",
@@ -70,10 +70,10 @@
     "index.html": "/guitar-chords-test/index.html",
     "static/media/close.svg": "/guitar-chords-test/static/media/close.c76ad28c33323dfe86ec1e4bcf9c5b6c.svg",
     "main.58e9d0e5.css.map": "/guitar-chords-test/static/css/main.58e9d0e5.css.map",
-    "main.dfaa61ab.js.map": "/guitar-chords-test/static/js/main.dfaa61ab.js.map"
+    "main.4d55457f.js.map": "/guitar-chords-test/static/js/main.4d55457f.js.map"
   },
   "entrypoints": [
     "static/css/main.58e9d0e5.css",
-    "static/js/main.dfaa61ab.js"
+    "static/js/main.4d55457f.js"
   ]
 }
