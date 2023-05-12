@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter , Routes, Route } from 'react-router-dom';
 import { routes } from './routes/routes';
 import EntryPage from './views/entry-page/EntryPage';
 import ListenToExamples from './views/listen-to-examples/ListenToExamples';
@@ -10,7 +10,7 @@ import NotFound from './views/not-found/NotFound';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path={routes.ENTRY} element={
           <ChordsProvider>
@@ -29,7 +29,7 @@ function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
